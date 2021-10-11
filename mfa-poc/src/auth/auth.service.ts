@@ -3,8 +3,6 @@ import * as speakeasy from 'speakeasy';
 import * as QRCode from 'qrcode';
 import * as jwt from 'jsonwebtoken';
 
-const token = jwt.sign({ foo: 'bar' }, 'shhhhh');
-
 @Injectable()
 export class AuthService {
   logIn(user: string, pass: string): any {
@@ -17,8 +15,10 @@ export class AuthService {
         },
         'CloudDistrictRules',
       );
+
       return jwtToken;
     }
+
     return 'ERROR: Bad credentials';
   }
 
@@ -42,10 +42,10 @@ export class AuthService {
   }
 
   async respondWithQRCode(otpauth_url) {
-    return await QRCode.toDataURL(otpauth_url);
+    return QRCode.toDataURL(otpauth_url);
   }
 
-  validateSecret(token: string): any {
+  getMfaValidatedToken(token: string): string {
     const secret = this.getSecret();
 
     const verified = speakeasy.totp.verify({
@@ -64,6 +64,7 @@ export class AuthService {
         },
         'CloudDistrictRules',
       );
+
       return jwtToken;
     }
 

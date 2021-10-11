@@ -19,13 +19,13 @@ export class AuthController {
   @Mfa(MfaLevels.public)
   login(@Body('user') user: string, @Body('pass') pass: string): any {
     const jwtToken = this.authService.logIn(user, pass);
-    return jwtToken;
+    return { token: jwtToken };
   }
 
   @Post('/mfa/authenticate')
   @Mfa(MfaLevels.single)
   validateSecret(@Body('token') token: string): any {
-    const validated = this.authService.validateSecret(token);
-    return { validated: validated };
+    const jwtToken = this.authService.getMfaValidatedToken(token);
+    return { token: jwtToken };
   }
 }
