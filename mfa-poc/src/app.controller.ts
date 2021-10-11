@@ -14,7 +14,13 @@ export class AppController {
     return `<img src="${imgSrc}">`;
   }
 
-  @Post('/validate')
+  @Post('/login')
+  login(@Body('user') user: string, @Body('pass') pass: string): any {
+    const jwtToken = this.authService.logIn(user, pass);
+    return jwtToken;
+  }
+
+  @Post('/mfa/authenticate')
   validateSecret(@Body('token') token: string): any {
     const validated = this.authService.validateSecret(token);
     return { validated: validated };
