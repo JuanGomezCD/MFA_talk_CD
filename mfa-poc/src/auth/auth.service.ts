@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as speakeasy from 'speakeasy';
 import * as QRCode from 'qrcode';
-import { write } from 'fs';
 
 @Injectable()
 export class AuthService {
