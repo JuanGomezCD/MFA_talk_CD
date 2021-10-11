@@ -105,3 +105,7 @@ dist
 
 # IDE - VSCode
 .idea/*
+
+# Files
+mfa-poc/.eslintrc.js
+mfa-poc/.prettierrc
