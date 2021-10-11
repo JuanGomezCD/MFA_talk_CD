@@ -9,9 +9,8 @@ export class AuthController {
   @Get('/qr-code')
   async getSecret(): Promise<string> {
     const secret = this.authService.getSecret();
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     const imgSrc = await this.authService.respondWithQRCode(secret.otpauthUrl);
+
     return `<img src="${imgSrc}">`;
   }
 
@@ -19,6 +18,7 @@ export class AuthController {
   @Mfa(MfaLevels.public)
   login(@Body('user') user: string, @Body('pass') pass: string): any {
     const jwtToken = this.authService.logIn(user, pass);
+
     return { token: jwtToken };
   }
 
@@ -26,6 +26,7 @@ export class AuthController {
   @Mfa(MfaLevels.single)
   validateSecret(@Body('token') token: string): any {
     const jwtToken = this.authService.getMfaValidatedToken(token);
+
     return { token: jwtToken };
   }
 }
